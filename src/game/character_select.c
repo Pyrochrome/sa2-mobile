@@ -246,8 +246,8 @@ void CreateCharacterSelectionScreen(u8 initialSelection, bool8 allUnlocked)
         characterScreen->amyUnlocked = TRUE;
         characterScreen->initialSelection = initialSelection;
 
-        if (initialSelection > CHARACTER_AMY) {
-            characterScreen->initialSelection = CHARACTER_AMY;
+        if (initialSelection > CHARACTER_NEW) {
+            characterScreen->initialSelection = CHARACTER_NEW;
         }
     } else {
 
@@ -325,7 +325,11 @@ void CreateCharacterSelectionScreen(u8 initialSelection, bool8 allUnlocked)
         s->y = 0;
         s->graphics.dest = VramMalloc(0x10);
         s->graphics.anim = SA2_ANIM_CHAR_SELECT_CIRCLE;
-        s->variant = SA2_ANIM_VARIANT_CHAR_SELECT_CIRCLE_INACTIVE + i;
+        if (i == 5) {
+            s->variant = SA2_ANIM_VARIANT_CHAR_SELECT_CIRCLE_INACTIVE + 4;
+        } else {
+            s->variant = SA2_ANIM_VARIANT_CHAR_SELECT_CIRCLE_INACTIVE + i;
+        }
         s->oamFlags = SPRITE_OAM_ORDER(4);
         s->graphics.size = 0;
         s->animCursor = 0;
