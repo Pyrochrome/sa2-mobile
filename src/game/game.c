@@ -75,7 +75,7 @@ void GameInit(void)
     }
 
     SaveInit();
-
+    
     if (SaveGameExists()) {
         LoadSaveGame();
         hasProfile = TRUE;
@@ -86,6 +86,12 @@ void GameInit(void)
         ShowSinglePakResults();
         return;
     }
+
+#if DEBUG
+    CreateTitleScreen();
+    LoadCompletedSaveGame();
+    return;
+#endif
 
 #if TAS_TESTING
     gInputPlaybackData = gDemoRecordings[4];

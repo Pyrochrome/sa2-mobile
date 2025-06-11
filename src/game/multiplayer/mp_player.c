@@ -379,6 +379,9 @@ NONMATCH("asm/non_matching/game/multiplayer/mp_player__Task_CreateMultiplayerPla
                             case CHARACTER_AMY:
                                 sub_8017C28();
                                 break;
+                            case CHARACTER_NEW:
+                                sub_8017C28();
+                                break;
                         }
                     }
                 } else {

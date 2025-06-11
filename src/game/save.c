@@ -845,7 +845,7 @@ static void GenerateCompletedSaveGame(struct SaveGame *gameState)
         gameState->chaosEmeralds[i] = ALL_ZONE_CHAOS_EMERALDS | CHAOS_EMERALDS_COMPLETED;
     }
 
-    gameState->unlockedCharacters = MAIN_CHARACTERS | CHARACTER_BIT(CHARACTER_AMY);
+    gameState->unlockedCharacters = MAIN_CHARACTERS | CHARACTER_BIT(CHARACTER_AMY) | CHARACTER_BIT(CHARACTER_NEW);  
     gameState->soundTestUnlocked = TRUE;
     gameState->bossTimeAttackUnlocked = TRUE;
     gameState->chaoGardenUnlocked = TRUE;
@@ -857,6 +857,7 @@ static void GenerateCompletedSaveGame(struct SaveGame *gameState)
     gameState->completedCharacters[CHARACTER_CREAM] = TRUE;
     gameState->completedCharacters[CHARACTER_TAILS] = TRUE;
     gameState->completedCharacters[CHARACTER_KNUCKLES] = TRUE;
+    gameState->completedCharacters[CHARACTER_NEW] = TRUE;
 }
 
 // Exported functions

@@ -42,9 +42,9 @@ static const struct UNK_80DF670 gUnknown_080DF668 = {
 };
 
 // character sprites
-static const struct UNK_80DF670 *const gUnknown_080DF670[5] = {
+static const struct UNK_80DF670 *const gUnknown_080DF670[6] = {
     [CHARACTER_SONIC] = &gUnknown_080DF2F8[0],     [CHARACTER_CREAM] = &gUnknown_080DF2F8[22], [CHARACTER_TAILS] = &gUnknown_080DF2F8[44],
-    [CHARACTER_KNUCKLES] = &gUnknown_080DF2F8[66], [CHARACTER_AMY] = &gUnknown_080DF2F8[88],
+    [CHARACTER_KNUCKLES] = &gUnknown_080DF2F8[66], [CHARACTER_AMY] = &gUnknown_080DF2F8[88], [CHARACTER_NEW] = &gUnknown_080DF2F8[88],
 };
 
 typedef void (*PlayerStateHandler)(void);

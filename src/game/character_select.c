@@ -99,26 +99,26 @@ static void Task_FadeOutAndExitToPrevious(void);
 
 static void RenderUI(struct CharacterSelectionScreen *);
 
-#define CHARACTER_HIDDEN_LABEL 5
+#define CHARACTER_HIDDEN_LABEL 6
 
 static ALIGNED(4) const u16 sCharacterTitleLeftSideAssets[][2] = {
     [CHARACTER_SONIC] = { 739, 0 },    [CHARACTER_CREAM] = { 739, 8 }, [CHARACTER_TAILS] = { 739, 2 },
-    [CHARACTER_KNUCKLES] = { 739, 4 }, [CHARACTER_AMY] = { 739, 6 },   [CHARACTER_HIDDEN_LABEL] = { 739, 10 },
+    [CHARACTER_KNUCKLES] = { 739, 4 }, [CHARACTER_AMY] = { 739, 6 }, [CHARACTER_NEW] = { 739, 12 },  [CHARACTER_HIDDEN_LABEL] = { 739, 10 },
 };
 
 static const u16 sCharacteTitleRightSideAssets[][2] = {
     [CHARACTER_SONIC] = { 739, 1 },    [CHARACTER_CREAM] = { 739, 9 }, [CHARACTER_TAILS] = { 739, 3 },
-    [CHARACTER_KNUCKLES] = { 739, 5 }, [CHARACTER_AMY] = { 739, 7 },   [CHARACTER_HIDDEN_LABEL] = { 739, 11 },
+    [CHARACTER_KNUCKLES] = { 739, 5 }, [CHARACTER_AMY] = { 739, 7 }, [CHARACTER_NEW] = { 739, 13 },  [CHARACTER_HIDDEN_LABEL] = { 739, 11 },
 };
 
 static const u16 sCharacterSpriteAssets[][2] = {
     [CHARACTER_SONIC] = { 736, 0 },    [CHARACTER_CREAM] = { 736, 2 }, [CHARACTER_TAILS] = { 736, 4 },
-    [CHARACTER_KNUCKLES] = { 736, 6 }, [CHARACTER_AMY] = { 736, 8 },
+    [CHARACTER_KNUCKLES] = { 736, 6 }, [CHARACTER_AMY] = { 736, 8 }, [CHARACTER_NEW] = { 736, 10 },
 };
 
 static const u16 sCharacterSelectedSpriteAssets[][2] = {
     [CHARACTER_SONIC] = { 736, 1 },    [CHARACTER_CREAM] = { 736, 3 }, [CHARACTER_TAILS] = { 736, 5 },
-    [CHARACTER_KNUCKLES] = { 736, 7 }, [CHARACTER_AMY] = { 736, 9 },
+    [CHARACTER_KNUCKLES] = { 736, 7 }, [CHARACTER_AMY] = { 736, 9 }, [CHARACTER_NEW] = { 736, 11 },
 };
 
 static const u16 sCharacterNameSubTextAssets[][2] = {
@@ -135,7 +135,7 @@ static const u8 gUnknown_080D7274[] = { 8, 10, 10, 14 };
 static const u16 gCharacterAnnouncements[] = {
     [CHARACTER_SONIC] = VOICE__ANNOUNCER__SONIC, [CHARACTER_CREAM] = VOICE__ANNOUNCER__CREAM,
     [CHARACTER_TAILS] = VOICE__ANNOUNCER__TAILS, [CHARACTER_KNUCKLES] = VOICE__ANNOUNCER__KNUCKLES,
-    [CHARACTER_AMY] = VOICE__ANNOUNCER__AMY,
+    [CHARACTER_AMY] = VOICE__ANNOUNCER__AMY, [CHARACTER_NEW] = VOICE__ANNOUNCER__AMY,
 };
 
 static const u8 gUnknown_080D7282[][5] = {
@@ -152,14 +152,14 @@ static const u16 sCourselScrollAnimVelocities[] = {
 };
 
 static const u8 sCharacterChosenAnimLengths[] = {
-    [CHARACTER_SONIC] = 30, [CHARACTER_CREAM] = 30, [CHARACTER_TAILS] = 30, [CHARACTER_KNUCKLES] = 30, [CHARACTER_AMY] = 30,
+    [CHARACTER_SONIC] = 30, [CHARACTER_CREAM] = 30, [CHARACTER_TAILS] = 30, [CHARACTER_KNUCKLES] = 30, [CHARACTER_AMY] = 30, [CHARACTER_NEW] = 30,
 };
 
-#define CHEESE_SILHOUETTE 5
+#define CHEESE_SILHOUETTE 6
 
 static const u8 sCharacterSilhouettes[] = {
     [CHARACTER_SONIC] = 8,    [CHARACTER_CREAM] = 4, [CHARACTER_TAILS] = 7,
-    [CHARACTER_KNUCKLES] = 6, [CHARACTER_AMY] = 5,   [CHEESE_SILHOUETTE] = 3,
+    [CHARACTER_KNUCKLES] = 6, [CHARACTER_AMY] = 5, [CHARACTER_NEW] = 1, [CHEESE_SILHOUETTE] = 3,
 };
 
 #define BackgroundAnim()                                                                                                                   \

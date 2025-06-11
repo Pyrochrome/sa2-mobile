@@ -334,7 +334,7 @@ void sub_0200DBE0(Player *p);
 const AnimId gPlayerCharacterIdleAnims[NUM_CHARACTERS] = {
     SA2_ANIM_CHAR(SA2_CHAR_ANIM_IDLE, CHARACTER_SONIC), SA2_ANIM_CHAR(SA2_CHAR_ANIM_IDLE, CHARACTER_CREAM),
     SA2_ANIM_CHAR(SA2_CHAR_ANIM_IDLE, CHARACTER_TAILS), SA2_ANIM_CHAR(SA2_CHAR_ANIM_IDLE, CHARACTER_KNUCKLES),
-    SA2_ANIM_CHAR(SA2_CHAR_ANIM_IDLE, CHARACTER_AMY),
+    SA2_ANIM_CHAR(SA2_CHAR_ANIM_IDLE, CHARACTER_AMY), SA2_ANIM_CHAR(SA2_CHAR_ANIM_IDLE, CHARACTER_NEW),
 };
 
 // TODO: This is unaligned in-ROM.
@@ -493,6 +493,7 @@ static const s16 sTrickAccel[NUM_TRICK_DIRS][NUM_CHARACTERS][2] = {
         [CHARACTER_TAILS] = {Q_8_8(0.00), Q_8_8(-6.00)},
         [CHARACTER_KNUCKLES] = {Q_8_8(0.00), Q_8_8(-6.00)},
         [CHARACTER_AMY] = {Q_8_8(0.00), Q_8_8(-6.00)},
+        [CHARACTER_NEW] = {Q_8_8(0.00), Q_8_8(-6.00)},
     },
     [TRICK_DIR_DOWN] = {
         [CHARACTER_SONIC] = {Q_8_8(0.00), Q_8_8(1.00)},
@@ -500,6 +501,7 @@ static const s16 sTrickAccel[NUM_TRICK_DIRS][NUM_CHARACTERS][2] = {
         [CHARACTER_TAILS] = {Q_8_8(0.00), Q_8_8(0.50)},
         [CHARACTER_KNUCKLES] = {Q_8_8(0.00), Q_8_8(1.00)},
         [CHARACTER_AMY] = {Q_8_8(0.00), Q_8_8(1.00)},
+        [CHARACTER_NEW] = {Q_8_8(0.00), Q_8_8(-6.00)},
     },
     [TRICK_DIR_FORWARD] = {
         [CHARACTER_SONIC] = {Q_8_8(6.00), Q_8_8(0.00)},
@@ -507,6 +509,7 @@ static const s16 sTrickAccel[NUM_TRICK_DIRS][NUM_CHARACTERS][2] = {
         [CHARACTER_TAILS] = {Q_8_8(4.00), Q_8_8(-2.50)},
         [CHARACTER_KNUCKLES] = {Q_8_8(6.00), Q_8_8(0.00)},
         [CHARACTER_AMY] = {Q_8_8(6.00), Q_8_8(0.00)},
+        [CHARACTER_NEW] = {Q_8_8(0.00), Q_8_8(-6.00)},
     },
     [TRICK_DIR_BACKWARD] = {
         [CHARACTER_SONIC] = {Q_8_8(-5.00), Q_8_8(-3.50)},
@@ -514,6 +517,7 @@ static const s16 sTrickAccel[NUM_TRICK_DIRS][NUM_CHARACTERS][2] = {
         [CHARACTER_TAILS] = {Q_8_8(-3.50), Q_8_8(-3.00)},
         [CHARACTER_KNUCKLES] = {Q_8_8(-5.00), Q_8_8(0.00)},
         [CHARACTER_AMY] = {Q_8_8(-3.50), Q_8_8(-2.00)},
+        [CHARACTER_NEW] = {Q_8_8(0.00), Q_8_8(-6.00)},
     },
 };
 
@@ -527,6 +531,7 @@ static const u8 sTrickMasks[NUM_TRICK_DIRS][NUM_CHARACTERS] = {
         [CHARACTER_TAILS]    = MASK_80D6992_1,
         [CHARACTER_KNUCKLES] = (MASK_80D6992_2 | MASK_80D6992_1),
         [CHARACTER_AMY]      = MASK_80D6992_1,
+        [CHARACTER_NEW]      = MASK_80D6992_1,
     },
     [TRICK_DIR_DOWN] = {
         [CHARACTER_SONIC]    = 0,
@@ -534,6 +539,7 @@ static const u8 sTrickMasks[NUM_TRICK_DIRS][NUM_CHARACTERS] = {
         [CHARACTER_TAILS]    = 0,
         [CHARACTER_KNUCKLES] = 0,
         [CHARACTER_AMY]      = 0,
+        [CHARACTER_NEW]      = 0,
     },
     [TRICK_DIR_FORWARD] = {
         [CHARACTER_SONIC]    = MASK_80D6992_8,
@@ -541,6 +547,7 @@ static const u8 sTrickMasks[NUM_TRICK_DIRS][NUM_CHARACTERS] = {
         [CHARACTER_TAILS]    = (MASK_80D6992_10 | MASK_80D6992_1),
         [CHARACTER_KNUCKLES] = MASK_80D6992_4,
         [CHARACTER_AMY]      = MASK_80D6992_8,
+        [CHARACTER_NEW]      = MASK_80D6992_8,
     },
     [TRICK_DIR_BACKWARD] = {
         [CHARACTER_SONIC]    = 0,
@@ -548,6 +555,7 @@ static const u8 sTrickMasks[NUM_TRICK_DIRS][NUM_CHARACTERS] = {
         [CHARACTER_TAILS]    = (MASK_80D6992_10 | MASK_80D6992_1),
         [CHARACTER_KNUCKLES] = MASK_80D6992_4,
         [CHARACTER_AMY]      = 0,
+        [CHARACTER_NEW]      = 0,
     },
 };
 
@@ -956,6 +964,10 @@ void InitializePlayer(Player *p)
         } break;
 
         case CHARACTER_AMY: {
+            p->w.af.unkAC = 0;
+        } break;
+
+        case CHARACTER_NEW: {
             p->w.af.unkAC = 0;
         } break;
     }
@@ -4323,6 +4335,7 @@ void sub_8024F74(Player *p, PlayerSpriteInfo *inPsi)
 
     switch (p->character) {
         case CHARACTER_AMY:
+        case CHARACTER_NEW:
         case CHARACTER_KNUCKLES:
         case CHARACTER_SONIC:
             break;
@@ -6682,6 +6695,16 @@ bool32 Player_TryMidAirAction(Player *p)
                     // TODO / BUG?
                     // there's no return TRUE; for Amy
                 } break;
+
+                case CHARACTER_NEW: {
+                    p->moveState |= MOVESTATE_SOME_ATTACK;
+                    p->charState = CHARSTATE_SOME_ATTACK;
+                    Player_SonicAmy_InitSkidAttackGfxTask(I(p->qWorldX), I(p->qWorldY), 1);
+                    song = SE_SONIC_INSTA_SHIELD;
+                    goto Player_TryMidAirAction_PlaySfx;
+                    
+                } break;
+                
             }
         }
     }
@@ -7758,6 +7781,10 @@ void Player_InitAttack(Player *p)
                 // Same code as Sonic's "Super Skid" (Boost + B_BUTTON)
                 Player_SonicAmy_InitSkidAttack(p);
             }
+        } break;
+
+        case CHARACTER_NEW: {
+            Player_SonicAmy_InitSkidAttack(p);
         } break;
     }
 }

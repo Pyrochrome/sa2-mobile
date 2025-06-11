@@ -363,14 +363,14 @@ endif
 
 #### Main Targets ####
 
-ifeq ($(PLATFORM),gba)
-all: compare
+#ifeq ($(PLATFORM),gba)
+#all: compare
 
-compare: rom
-	$(SHA1) $(BUILD_NAME).sha1
-else
+#compare: rom
+#	$(SHA1) $(BUILD_NAME).sha1
+#else
 all: rom
-endif
+#endif
 
 rom: $(ROM)
 

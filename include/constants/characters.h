@@ -9,6 +9,7 @@ typedef enum {
     CHARACTER_TAILS,
     CHARACTER_KNUCKLES,
     CHARACTER_AMY,
+    CHARACTER_NEW,
 
     NUM_CHARACTERS
 } ECharacters;
@@ -20,6 +21,6 @@ typedef enum {
 #define CHARACTER_BIT(character) (1 << (character))
 
 #define MAIN_CHARACTERS                                                                                                                    \
-    (CHARACTER_BIT(CHARACTER_SONIC) | CHARACTER_BIT(CHARACTER_CREAM) | CHARACTER_BIT(CHARACTER_TAILS) | CHARACTER_BIT(CHARACTER_KNUCKLES))
+    (CHARACTER_BIT(CHARACTER_SONIC) | CHARACTER_BIT(CHARACTER_CREAM) | CHARACTER_BIT(CHARACTER_TAILS) | CHARACTER_BIT(CHARACTER_KNUCKLES)) // (CHARACTER_BIT(CHARACTER_NEW)
 
 #endif
