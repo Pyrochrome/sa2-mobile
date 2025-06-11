@@ -33,6 +33,8 @@
 
 #include "game/multiplayer/multiplayer_event_mgr.h"
 
+#define BOSS_RINGS_DEFAULT_RESPAWN_COUNT 10
+
 struct Task *gGameStageTask = NULL;
 
 void Task_GameStage(void);
@@ -76,7 +78,7 @@ void StageInit_31(void);
 void StageInit_32(void);
 void StageInit_33(void);
 void StageInit_Dummy(void);
-
+#ifndef COLLECT_RINGS_ROM
 // NOTE(Jace): Many of these call copies of the exact same procedure,
 //             so for non-matching builds we could just exclude
 //             codegen for those copies and have pointers to a single one?
@@ -114,13 +116,14 @@ const VoidFn sStageInitProcs[NUM_LEVEL_IDS] = { StageInit_Zone1Act1,
                                                 StageInit_31,
                                                 StageInit_32,
                                                 StageInit_33 };
-
+#else
+extern const VoidFn sStageInitProcs[NUM_LEVEL_IDS];
+#endif
 extern const s8 CollHeightMap_zone_1_act_1_fg[];
 extern const u8 CollTileRot_zone_1_act_1_fg[];
 extern const u8 CollFlags_zone_1_act_1_fg[];
 
-#define BOSS_RINGS_DEFAULT_RESPAWN_COUNT 10
-
+#ifndef COLLECT_RINGS_ROM
 void ApplyGameStageSettings(void)
 {
     gLevelScore = 0;
@@ -145,7 +148,9 @@ void ApplyGameStageSettings(void)
         SetPlayerControls(gLoadedSaveGame->buttonConfig.jump, gLoadedSaveGame->buttonConfig.attack, gLoadedSaveGame->buttonConfig.trick);
     }
 }
+#endif
 
+#ifndef COLLECT_RINGS_ROM
 void GameStageStart(void)
 {
     gTrappedAnimalVariant = 0;
@@ -177,6 +182,7 @@ void GameStageStart(void)
 
     CreateGameStage();
 }
+#endif
 
 void CreateGameStage(void)
 {
@@ -199,7 +205,7 @@ void CreateGameStage(void)
     if (!IS_EXTRA_STAGE(gCurrentLevel)) {
         CreatePlayer(gSelectedCharacter, gCurrentLevel, &gPlayer);
     }
-
+#ifndef COLLECT_RINGS_ROM
     if (IS_BOSS_STAGE(gCurrentLevel)) {
         gBossCameraClampYLower = gBossCameraYClamps[LEVEL_TO_ZONE(gCurrentLevel)][0];
         gBossCameraClampYUpper = gBossCameraYClamps[LEVEL_TO_ZONE(gCurrentLevel)][1];
@@ -214,13 +220,17 @@ void CreateGameStage(void)
             gBossCameraClampYUpper = gBossCameraYClamps[ZONE_FINAL + 1][1];
         }
     }
+#endif
 
+#ifndef COLLECT_RINGS_ROM
     if (gGameMode != GAME_MODE_MULTI_PLAYER_COLLECT_RINGS) {
         CreateStageMusicManager();
         SetupStageIntro();
         InitCamera(gCurrentLevel);
         sStageInitProcs[gCurrentLevel]();
-    } else {
+    } else
+#endif
+    {
         InitCamera(0);
         StageInit_CollectRings();
         CreateCollectRingsTimeDisplay();
@@ -228,9 +238,11 @@ void CreateGameStage(void)
         gStageFlags &= ~STAGE_FLAG__ACT_START;
     }
 
+#ifndef COLLECT_RINGS_ROM
     if (gCurrentLevel != LEVEL_INDEX(ZONE_1, ACT_1)) {
         CreateStageWaterTask(-1, 0, 0);
     }
+#endif
 
     gStageFlags &= ~STAGE_FLAG__2;
     gStageFlags &= ~STAGE_FLAG__TIMER_REVERSED;
@@ -278,7 +290,9 @@ void CreateGameStage(void)
         if (gGameMode != GAME_MODE_MULTI_PLAYER_COLLECT_RINGS) {
             gPlayer.itemEffect |= PLAYER_ITEM_EFFECT__TELEPORT;
         }
-    } else {
+    }
+#ifndef COLLECT_RINGS_ROM
+    else {
         for (i = 0; i < 4; i++) {
             gUnknown_030054B4[i] = -1;
         }
@@ -293,8 +307,10 @@ void CreateGameStage(void)
     if (IS_MULTI_PLAYER && gGameMode != GAME_MODE_MULTI_PLAYER_COLLECT_RINGS) {
         CreateRaceProgressIndicator();
     }
+#endif
 }
 
+#ifndef COLLECT_RINGS_ROM
 void Task_GameStage(void)
 {
     u16 sioId = SIO_MULTI_CNT->id;
@@ -823,3 +839,4 @@ void StageInit_Dummy(void) { StageInit_SetMusic_inline(gCurrentLevel); }
 void StageInit_CollectRings(void) { StageInit_SetMusic_inline(gCurrentLevel); }
 
 void StageInit_SetMusic(u16 level) { StageInit_SetMusic_inline(level); }
+#endif
